@@ -87,6 +87,6 @@ default["kafka_broker"]["conf"]["log4j"] = {
     "log4j.logger.kafka.network.RequestChannel$" => "WARN, requestAppender",
     "log4j.logger.kafka.request.logger" => "WARN, requestAppender",
     "log4j.logger.state.change.logger" => "TRACE, stateChangeAppender",
-    "log4j.rootLogger" => "INFO, stdout "
+    "log4j.rootLogger" => "WARN, stdout "
   }
 }
