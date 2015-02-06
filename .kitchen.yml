@@ -16,5 +16,10 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[kafka_broker::default]
+      - recipe[apt]
+      - recipe[zookeeper]
+      - recipe[zookeeper::service]
+      - recipe[kafka_broker]
     attributes:
+      zookeeper:
+        service_style: "upstart"

@@ -17,6 +17,31 @@ Based off the work of [Federico Gimenez Nieto](https://github.com/fgimenez/kafka
 * `kafka_broker::service`
     - Create service upstart scripts
 
+## Usage
+
+Create a single kafka node with a single zookeeper instance on the same host.
+
+```bash
+bundle install --path vendor/bundle
+bundle exec berks install
+bundle exec kitchen converge
+bundle exec kitchen login
+```
+
+Login to the instance and create a new kafka topic with 3 partitions.
+
+```bash
+$ sudo /usr/local/kafka/bin/kafka-topics.sh --create --topic event-stream --replication-factor 1 --partitions 3 --zookeeper localhost:2181
+# [2015-02-06 00:49:08,721] INFO Topic creation {"version":1,"partitions":{"2":[0],"1":[0],"0":[0]}} (kafka.admin.AdminUtils$)
+# Created topic "event-stream".
+
+$ sudo /usr/local/kafka/bin/kafka-topics.sh --describe --zookeeper localhost:2181
+# Topic:event-stream  PartitionCount:3    ReplicationFactor:1 Configs:
+#     Topic: event-stream Partition: 0    Leader: 0   Replicas: 0 Isr: 0
+#     Topic: event-stream Partition: 1    Leader: 0   Replicas: 0 Isr: 0
+#     Topic: event-stream Partition: 2    Leader: 0   Replicas: 0 Isr: 0
+```
+
 ## Contributing
 
 * Standard PR model with details on why
