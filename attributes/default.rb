@@ -6,8 +6,8 @@
 default["kafka_broker"]["version"] = "0.8.1.1"
 default["kafka_broker"]["scala_version"] = "2.10"
 default["kafka_broker"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
-# shasum -a 256 /tmp/kitchen/cache/kafka_2.10-0.8.1.1.tgz | cut -c-6
-default["kafka_broker"]["checksum"] = "2532af"
+# shasum -a 256 /tmp/kitchen/cache/kafka_2.10-0.8.1.1.tgz
+default["kafka_broker"]["checksum"] = "2532af3dbd71d2f2f95f71abff5b7505690bd1f15c7063f8cbaa603b45ee4e86"
 
 default["kafka_broker"]["user"] = "kafka"
 
