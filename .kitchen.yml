@@ -19,7 +19,7 @@ suites:
       - recipe[apt]
       - recipe[zookeeper]
       - recipe[zookeeper::service]
-      - recipe[kafka_broker]
+      - recipe[apache_kafka]
     attributes:
       zookeeper:
         service_style: "upstart"

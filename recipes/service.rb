@@ -1,5 +1,5 @@
 # encoding: UTF-8
-# Cookbook Name:: kafka_broker
+# Cookbook Name:: apache_kafka
 # Recipe:: service
 #
 # based on the work by Simple Finance Technology Corp.
@@ -18,9 +18,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version_tag = "kafka_#{node["kafka_broker"]["scala_version"]}-#{node["kafka_broker"]["version"]}"
+version_tag = "kafka_#{node["apache_kafka"]["scala_version"]}-#{node["apache_kafka"]["version"]}"
 
-case node["kafka_broker"]["service_style"]
+case node["apache_kafka"]["service_style"]
 when "upstart"
   template "/etc/default/kafka" do
     source "kafka_env.erb"
@@ -28,13 +28,13 @@ when "upstart"
     action :create
     mode "0644"
     variables(
-      :kafka_home => ::File.join(node["kafka_broker"]["install_dir"], version_tag),
-      :kafka_config => node["kafka_broker"]["config_dir"],
-      :kafka_bin => node["kafka_broker"]["bin_dir"],
-      :kafka_log => node["kafka_broker"]["log_dir"],
-      :kafka_user => node["kafka_broker"]["user"],
-      :scala_version => node["kafka_broker"]["scala_version"],
-      :kafka_heap_opts => node["kafka_broker"]["kafka_heap_opts"]
+      :kafka_home => ::File.join(node["apache_kafka"]["install_dir"], version_tag),
+      :kafka_config => node["apache_kafka"]["config_dir"],
+      :kafka_bin => node["apache_kafka"]["bin_dir"],
+      :kafka_log => node["apache_kafka"]["log_dir"],
+      :kafka_user => node["apache_kafka"]["user"],
+      :scala_version => node["apache_kafka"]["scala_version"],
+      :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"]
     )
     notifies :restart, "service[kafka]", :delayed
   end
