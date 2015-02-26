@@ -5,5 +5,4 @@
 .bundle
 Berksfile.lock
 Gemfile.lock
-VERSION
 vendor
