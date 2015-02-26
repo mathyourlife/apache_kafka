@@ -33,7 +33,8 @@ when "upstart"
       :kafka_bin => node["kafka_broker"]["bin_dir"],
       :kafka_log => node["kafka_broker"]["log_dir"],
       :kafka_user => node["kafka_broker"]["user"],
-      :scala_version => node["kafka_broker"]["scala_version"]
+      :scala_version => node["kafka_broker"]["scala_version"],
+      :kafka_heap_opts => node["kafka_broker"]["kafka_heap_opts"]
     )
     notifies :restart, "service[kafka]", :delayed
   end

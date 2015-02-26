@@ -1,7 +1,8 @@
 # Kafka Broker Cookbook
 
-Install and configure a kafka broker.  Default installation assumes a local
-zookeeper instance (see [SimpleFinance/chef-zookeeper](https://github.com/SimpleFinance/chef-zookeeper)).
+Install and configure a kafka broker 0.8.1.1.
+
+Default installation assumes a local zookeeper instance (see [SimpleFinance/chef-zookeeper](https://github.com/SimpleFinance/chef-zookeeper)).
 
 Based off the work of [Federico Gimenez Nieto](https://github.com/fgimenez/kafka-cookbook)
 
