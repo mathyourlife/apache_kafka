@@ -3,17 +3,15 @@
 # Recipe:: configure
 #
 
-directory node["kafka_broker"]["config_dir"] do
-  recursive true
-  owner node["kafka_broker"]["user"]
-end
-directory node["kafka_broker"]["bin_dir"] do
-  recursive true
-  owner node["kafka_broker"]["user"]
-end
-directory node["kafka_broker"]["log_dir"] do
-  recursive true
-  owner node["kafka_broker"]["user"]
+[
+  node["kafka_broker"]["config_dir"],
+  node["kafka_broker"]["bin_dir"],
+  node["kafka_broker"]["log_dir"],
+].each do |dir|
+  directory dir do
+    recursive true
+    owner node["kafka_broker"]["user"]
+  end
 end
 
 %w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }.each do |bin|
