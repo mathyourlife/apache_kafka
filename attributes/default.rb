@@ -11,6 +11,9 @@ default["kafka_broker"]["checksum"] = "2532af3dbd71d2f2f95f71abff5b7505690bd1f15
 
 default["kafka_broker"]["user"] = "kafka"
 
+# heap options are set low to allow for local development
+default["kafka_broker"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
+
 default["kafka_broker"]["install_java"] = true
 
 default["kafka_broker"]["install_dir"] = "/usr/local/kafka"
