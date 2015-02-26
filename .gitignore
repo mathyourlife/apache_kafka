@@ -6,3 +6,5 @@
 Berksfile.lock
 Gemfile.lock
 vendor
+VERSION
+metadata.json
