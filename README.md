@@ -1,6 +1,6 @@
-# Kafka Broker Cookbook
+# Apache Kafka Cookbook
 
-Install and configure a kafka broker 0.8.1.1.
+Install and configure apache kafka 0.8.1.1.
 
 Default installation assumes a local zookeeper instance (see [SimpleFinance/chef-zookeeper](https://github.com/SimpleFinance/chef-zookeeper)).
 
@@ -8,14 +8,14 @@ Based off the work of [Federico Gimenez Nieto](https://github.com/fgimenez/kafka
 
 ## Cookbooks
 
-* `kafka_broker::default`
+* `apache_kafka::default`
     - Full default install
-* `kafka_broker::install`
+* `apache_kafka::install`
     - Install the application, but do not start
     - Useful for wrapper cookbooks that want custom configurations before starting
-* `kafka_broker::configure`
+* `apache_kafka::configure`
     - Create the broker configs
-* `kafka_broker::service`
+* `apache_kafka::service`
     - Create service upstart scripts
 
 ## Usage

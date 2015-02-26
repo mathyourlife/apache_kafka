@@ -1,27 +1,27 @@
 # encoding: UTF-8
-# Cookbook Name:: kafka_broker
+# Cookbook Name:: apache_kafka
 # Attribute:: default
 #
 
-default["kafka_broker"]["version"] = "0.8.1.1"
-default["kafka_broker"]["scala_version"] = "2.10"
-default["kafka_broker"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
+default["apache_kafka"]["version"] = "0.8.1.1"
+default["apache_kafka"]["scala_version"] = "2.10"
+default["apache_kafka"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
 # shasum -a 256 /tmp/kitchen/cache/kafka_2.10-0.8.1.1.tgz
-default["kafka_broker"]["checksum"] = "2532af3dbd71d2f2f95f71abff5b7505690bd1f15c7063f8cbaa603b45ee4e86"
+default["apache_kafka"]["checksum"] = "2532af3dbd71d2f2f95f71abff5b7505690bd1f15c7063f8cbaa603b45ee4e86"
 
-default["kafka_broker"]["user"] = "kafka"
+default["apache_kafka"]["user"] = "kafka"
 
 # heap options are set low to allow for local development
-default["kafka_broker"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
+default["apache_kafka"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
 
-default["kafka_broker"]["install_java"] = true
+default["apache_kafka"]["install_java"] = true
 
-default["kafka_broker"]["install_dir"] = "/usr/local/kafka"
-default["kafka_broker"]["log_dir"] = "/var/log/kafka"
-default["kafka_broker"]["bin_dir"] = "/usr/local/kafka/bin"
-default["kafka_broker"]["config_dir"] = "/usr/local/kafka/config"
+default["apache_kafka"]["install_dir"] = "/usr/local/kafka"
+default["apache_kafka"]["log_dir"] = "/var/log/kafka"
+default["apache_kafka"]["bin_dir"] = "/usr/local/kafka/bin"
+default["apache_kafka"]["config_dir"] = "/usr/local/kafka/config"
 
-default["kafka_broker"]["service_style"] = "upstart"
+default["apache_kafka"]["service_style"] = "upstart"
 
 # Kafka configuration settings are detailed here.
 # https://kafka.apache.org/08/configuration.html
@@ -29,13 +29,13 @@ default["kafka_broker"]["service_style"] = "upstart"
 # by wrapper cookbooks.  All others are fixed at default levels.  This
 # allows wrapper cookbooks to override a value then subsequently remove
 # the override and allow the host to fall back to the default value.
-default["kafka_broker"]["broker.id"] = nil
-default["kafka_broker"]["port"] = 9092
-default["kafka_broker"]["zookeeper.connect"] = nil
+default["apache_kafka"]["broker.id"] = nil
+default["apache_kafka"]["port"] = 9092
+default["apache_kafka"]["zookeeper.connect"] = nil
 
 # Check in /var/log/kafka/server.log for invalid entries
 #
-default["kafka_broker"]["conf"]["server"] = {
+default["apache_kafka"]["conf"]["server"] = {
   "file" => "server.properties",
   "entries" => {
     ## Settings are set to defaults by kafka but can be optionally
@@ -44,11 +44,11 @@ default["kafka_broker"]["conf"]["server"] = {
     # "default.replication.factor" => 2,
     #
     # For a full list reference kafka's config documentation
-    "log.dirs" => node["kafka_broker"]["log_dir"]
+    "log.dirs" => node["apache_kafka"]["log_dir"]
   }
 }
 
-default["kafka_broker"]["conf"]["log4j"] = {
+default["apache_kafka"]["conf"]["log4j"] = {
   "file" => "log4j.properties",
   "entries" => {
     "log4j.additivity.kafka.controller" => "false",

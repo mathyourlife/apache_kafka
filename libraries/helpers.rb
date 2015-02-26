@@ -1,4 +1,4 @@
 # encoding: UTF-8
-# Cookbook Name:: kafka_broker
+# Cookbook Name:: apache_kafka
 # Libraries:: helpers
 #
