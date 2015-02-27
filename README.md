@@ -50,7 +50,7 @@ sudo /usr/local/kafka/bin/kafka-topics.sh --describe --zookeeper localhost:2181
 **Delete the topic** (new feature)
 
 ```
-sudo /usr/local/kafka/bin/kafka-topics.sh --delete --topic event-stream2  --zookeeper localhost:2181
+sudo /usr/local/kafka/bin/kafka-topics.sh --delete --topic event-stream --zookeeper localhost:2181
 # Topic event-stream is marked for deletion.
 # Note: This will have no impact if delete.topic.enable is not set to true.
 ```
