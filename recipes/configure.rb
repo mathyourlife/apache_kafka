@@ -6,6 +6,7 @@
 [
   node["apache_kafka"]["config_dir"],
   node["apache_kafka"]["bin_dir"],
+  node["apache_kafka"]["data_dir"],
   node["apache_kafka"]["log_dir"],
 ].each do |dir|
   directory dir do
@@ -22,8 +23,7 @@ end
     mode "0755"
     variables(
       :config_dir => node["apache_kafka"]["config_dir"],
-      :bin_dir => node["apache_kafka"]["bin_dir"],
-      :log_dir => node["apache_kafka"]["log_dir"]
+      :bin_dir => node["apache_kafka"]["bin_dir"]
     )
     notifies :restart, "service[kafka]", :delayed
   end

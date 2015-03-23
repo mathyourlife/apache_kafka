@@ -8,7 +8,6 @@ export SCALA_VERSION="<%= @scala_version %>"
 # Directories
 export KAFKA_CONFIG="<%= @kafka_config %>"
 export KAFKA_BIN="<%= @kafka_bin %>"
-export KAFKA_LOG_DIR="<%= @kafka_log %>"
 
 # Which java to use
 if [ -z "$JAVA_HOME" ]; then
@@ -30,7 +29,7 @@ if [ ! -z $JMX_PORT ]; then
 fi
 
 # Log4j settings
-export KAFKA_LOG4J_OPTS="-Dkafka.logs.dir=$KAFKA_LOG_DIR -Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties"
+export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties"
 
 # Generic jvm settings you want to add
 export KAFKA_OPTS=""
