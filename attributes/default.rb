@@ -37,7 +37,8 @@ default["apache_kafka"]["broker.id"] = nil
 default["apache_kafka"]["port"] = 9092
 default["apache_kafka"]["zookeeper.connect"] = nil
 
-default["apache_kafka"]["install_scripts"] = %w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }
+default["apache_kafka"]["install_scripts"] = %w{ kafka-run-class.sh }
+default["apache_kafka"]["template_scripts"] = %w{ kafka-server-start.sh kafka-topics.sh }
 
 # Check in /var/log/kafka/server.log for invalid entries
 #
