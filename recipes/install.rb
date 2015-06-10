@@ -37,8 +37,8 @@ end
 
 node["apache_kafka"]["install_scripts"].each do |bin|
     remote_file "Copy service file" do
-      path "${bin_dir}/${bin}"
-      source "file://${source_path}/bin/${bin}"
+      path "#{bin_dir}/#{bin}"
+      source "file://#{source_path}/bin/#{bin}"
       owner 'root'
       group 'root'
       mode 0755
