@@ -15,7 +15,7 @@
   end
 end
 
-%w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }.each do |bin|
+node["install_scripts"].each do |bin|
   template ::File.join(node["apache_kafka"]["bin_dir"], bin) do
     source "bin/#{bin}.erb"
     owner "kafka"
