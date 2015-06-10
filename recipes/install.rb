@@ -36,7 +36,6 @@ execute "unzip kafka source" do
 end
 
 node["apache_kafka"]["install_scripts"].each do |bin|
-  execute "copy ${bin}" do
     remote_file "Copy service file" do
       path "${bin_dir}/${bin}"
       source "file://${source_path}/bin/${bin}"
@@ -44,6 +43,5 @@ node["apache_kafka"]["install_scripts"].each do |bin|
       group 'root'
       mode 0755
     end
-  end
 end
 
