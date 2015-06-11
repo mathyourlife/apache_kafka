@@ -53,7 +53,7 @@ execute "unzip kafka source" do
 end
 
 node["apache_kafka"]["install_scripts"].each do |bin|
-    remote_file "Copy service file" do
+    remote_file "Copy service file #{bin}" do
       path "#{bin_dir}/#{bin}"
       source "file://#{source_path}/bin/#{bin}"
       owner 'root'
