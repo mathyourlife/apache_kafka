@@ -59,6 +59,8 @@ node["apache_kafka"]["install_scripts"].each do |bin|
       owner 'root'
       group 'root'
       mode 0755
+      action :nothing
+      subscribes :create, "execute[unzip kafka source]", :immediately
     end
 end
 
