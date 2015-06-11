@@ -9,7 +9,24 @@ version_tag = "kafka_#{node["apache_kafka"]["scala_version"]}-#{node["apache_kaf
 download_url = ::File.join(node["apache_kafka"]["mirror"], "#{node["apache_kafka"]["version"]}/#{version_tag}.tgz")
 download_path = ::File.join(Chef::Config[:file_cache_path], "#{version_tag}.tgz")
 source_path = ::File.join(node["apache_kafka"]["install_dir"], version_tag)
+
+config_dir = node["apache_kafka"]["config_dir"]
 bin_dir = node["apache_kafka"]["bin_dir"]
+data_dir = node["apache_kafka"]["data_dir"]
+log_dir = node["apache_kafka"]["log_dir"]
+
+[
+  config_dir,
+  bin_dir,
+  data_dir,
+  log_dir,
+].each do |dir|
+  directory dir do
+    recursive true
+    owner node["apache_kafka"]["user"]
+  end
+end
+
 
 user node["apache_kafka"]["user"] do
   comment node["apache_kafka"]["user"]

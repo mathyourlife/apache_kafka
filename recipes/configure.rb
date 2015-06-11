@@ -3,18 +3,6 @@
 # Recipe:: configure
 #
 
-[
-  node["apache_kafka"]["config_dir"],
-  node["apache_kafka"]["bin_dir"],
-  node["apache_kafka"]["data_dir"],
-  node["apache_kafka"]["log_dir"],
-].each do |dir|
-  directory dir do
-    recursive true
-    owner node["apache_kafka"]["user"]
-  end
-end
-
 node["apache_kafka"]["template_scripts"].each do |bin|
   template ::File.join(node["apache_kafka"]["bin_dir"], bin) do
     source "bin/#{bin}.erb"
