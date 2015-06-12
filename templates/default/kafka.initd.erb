@@ -1,0 +1,60 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:    kafka
+# Description: Apache Kafka Broker
+### END INIT INFO
+
+set -e
+
+[ -e "/etc/default/kafka" ] && . "/etc/default/kafka"
+
+DAEMON=$KAFKA_BIN/kafka-server-start.sh
+NAME=kafka
+DAEMONUSER=kafka
+PIDDIR=/var/run/kafka
+PIDFILE=$PIDDIR/pid
+DESC="Apache Kafka Broker"
+
+. /lib/lsb/init-functions
+
+if [ ! -e $PIDDIR ]; then
+  mkdir -p $PIDDIR
+  chown $KAFKA_USER $PIDDIR
+  chgrp $KAFKA_USER $PIDDIR
+fi
+
+case "$1" in
+  start)
+    if [ -e $PIDFILE ]; then
+      if $0 status > /dev/null ; then
+        log_success_msg "$DESC already started; not starting."
+        return
+      else
+        log_success_msg "Removing stale PID file $PIDFILE."
+        rm -f $PIDFILE
+      fi
+    fi
+    start-stop-daemon -Smbp $PIDFILE --chuid $KAFKA_USER -x $DAEMON -- $KAFKA_CONFIG/server.properties
+    exit 0
+  ;;
+  stop)
+    start-stop-daemon -Kp $PIDFILE --oknodo
+    rm -f $PIDFILE
+    exit 0
+  ;;
+  restart)
+    if [ -e $PIDFILE ]; then
+      start-stop-daemon -Kp $PIDFILE --oknodo
+      rm -f $PIDFILE
+    fi
+    start-stop-daemon -Sbmp $PIDFILE -x $DAEMON -- $KAFKA_CONFIG/server.properties
+  ;;
+  status)
+    start-stop-daemon --status --pidfile $PIDFILE
+    exit $?
+    ;;
+  *)
+    echo "Usage: /etc/init.d/$NAME {start|stop|restart|status}" >&2
+    exit 2
+  ;;
+esac
