@@ -6,13 +6,31 @@ provisioner:
   name: chef_solo
 
 platforms:
-  - name: ubuntu_14.04
+  - name: ubuntu-14.04
     driver_config:
       box: 'ubuntu/trusty64'
       box_url: 'http://files.vagrantup.com/trusty64.box'
       customize:
         memory: 2048
-        cpus: 2
+    attributes:
+      zookeeper:
+        service_style: "upstart"
+      apache_kafka:
+        service_style: "upstart"
+  - name: debian-7.8
+    driver_config:
+      box: 'chef/debian-7.8'
+      box_url: 'https://atlas.hashicorp.com/chef/boxes/debian-7.8'
+      customize:
+        memory: 2048
+    run_list:
+      - recipe[runit]
+    attributes:
+      zookeeper:
+        service_style: "runit"
+      apache_kafka:
+        service_style: "init.d"
+
 suites:
   - name: default
     run_list:
@@ -21,5 +39,5 @@ suites:
       - recipe[zookeeper::service]
       - recipe[apache_kafka]
     attributes:
-      zookeeper:
-        service_style: "upstart"
+      apt:
+        compile_time_update: true
