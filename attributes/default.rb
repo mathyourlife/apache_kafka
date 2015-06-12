@@ -14,6 +14,9 @@ default["apache_kafka"]["user"] = "kafka"
 # heap options are set low to allow for local development
 default["apache_kafka"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
 
+default["apache_kafka"]["jmx"]["port"] = ""
+default["apache_kafka"]["jmx"]["opts"] = "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+
 default["apache_kafka"]["install_java"] = true
 
 default["apache_kafka"]["install_dir"] = "/usr/local/kafka"
