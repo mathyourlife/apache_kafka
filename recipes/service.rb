@@ -33,7 +33,9 @@ when "upstart"
       :kafka_bin => node["apache_kafka"]["bin_dir"],
       :kafka_user => node["apache_kafka"]["user"],
       :scala_version => node["apache_kafka"]["scala_version"],
-      :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"]
+      :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
+      :jmx_port => node["apache_kafka"]["jmx"]["port"],
+      :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
     )
     notifies :restart, "service[kafka]", :delayed
   end

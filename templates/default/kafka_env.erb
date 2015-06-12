@@ -19,10 +19,10 @@ fi
 ##### RUN OPTIONS
 
 # JMX_PORT
-JMX_PORT=""
+JMX_PORT="<%= @jmx_port %>"
 
 # JMX settings
-export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false"
+export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
 
 if [ ! -z $JMX_PORT ]; then
   export KAFKA_JMX_OPTS="$KAFKA_JMX_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT"
