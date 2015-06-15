@@ -41,3 +41,6 @@ suites:
     attributes:
       apt:
         compile_time_update: true
+      apache_kafka:
+        jmx:
+          port: 9093
