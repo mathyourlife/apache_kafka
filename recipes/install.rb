@@ -5,8 +5,8 @@
 
 include_recipe "java" if node["apache_kafka"]["install_java"]
 
-version_tag = "kafka_#{node["apache_kafka"]["scala_version"]}-#{node["apache_kafka"]["version"]}"
-download_url = ::File.join(node["apache_kafka"]["mirror"], "#{node["apache_kafka"]["version"]}/#{version_tag}.tgz")
+version_tag = "kafka_#{node['apache_kafka']['scala_version']}-#{node['apache_kafka']['version']}"
+download_url = ::File.join(node["apache_kafka"]["mirror"], "#{node['apache_kafka']['version']}/#{version_tag}.tgz")
 download_path = ::File.join(Chef::Config[:file_cache_path], "#{version_tag}.tgz")
 
 user node["apache_kafka"]["user"] do
@@ -29,6 +29,6 @@ remote_file download_path do
 end
 
 execute "unzip kafka source" do
-  command "tar -zxvf #{download_path} -C #{node["apache_kafka"]["install_dir"]}"
+  command "tar -zxvf #{download_path} -C #{node['apache_kafka']['install_dir']}"
   not_if { ::File.exist?(::File.join(node["apache_kafka"]["install_dir"], version_tag)) }
 end
