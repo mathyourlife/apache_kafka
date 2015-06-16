@@ -67,6 +67,13 @@ when "init.d"
     supports :status => true, :restart => true, :reload => true
     action [:start]
   end
+when "runit"
+  include_recipe 'runit'
+
+  runit_service 'kafka'
+    default_logger true
+    action [:enable, :start]
+  end
 else
   Chef::Log.error("You specified an invalid service style for Kafka, but I am continuing.")
 end
