@@ -1,0 +1,3 @@
+#!/bin/bash
+source /etc/default/kafka
+exec <%= node["apache_kafka"]["bin_dir"] %>/kafka-server-start.sh <%= node["apache_kafka"]["config_dir"] %>/server.properties
