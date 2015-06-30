@@ -15,6 +15,13 @@ bin_dir = node["apache_kafka"]["bin_dir"]
 data_dir = node["apache_kafka"]["data_dir"]
 log_dir = node["apache_kafka"]["log_dir"]
 
+
+user node["apache_kafka"]["user"] do
+  comment node["apache_kafka"]["user"]
+  system true
+  shell "/bin/false"
+end
+
 [
   config_dir,
   bin_dir,
@@ -25,13 +32,6 @@ log_dir = node["apache_kafka"]["log_dir"]
     recursive true
     owner node["apache_kafka"]["user"]
   end
-end
-
-
-user node["apache_kafka"]["user"] do
-  comment node["apache_kafka"]["user"]
-  system true
-  shell "/bin/false"
 end
 
 directory node["apache_kafka"]["install_dir"] do
