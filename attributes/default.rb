@@ -48,7 +48,6 @@ default["apache_kafka"]["conf"]["server"] = {
     # "default.replication.factor" => 2,
     #
     # For a full list reference kafka's config documentation
-    "log.dirs" => node["apache_kafka"]["data_dir"],
     "delete.topic.enable" => "true"
   }
 }

@@ -4,6 +4,7 @@
 broker.id=<%= @broker_id %>
 port=<%= @port %>
 zookeeper.connect=<%= @zookeeper_connect %>
+log.dirs=<%= @log_dirs %>
 
 <%- @entries.each do |k, v| %>
 <%= k %>=<%= v %>
