@@ -24,7 +24,7 @@ end
 remote_file download_path do
   source download_url
   backup false
-  checksum node["apache_kafka"]["checksum"]
+  checksum node["apache_kafka"]["checksum"][node["apache_kafka"]["version"]]
   notifies :run, "execute[unzip kafka source]"
   not_if { ::File.exist?(::File.join(node["apache_kafka"]["install_dir"], version_tag)) }
 end

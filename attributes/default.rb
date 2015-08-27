@@ -7,7 +7,7 @@ default["apache_kafka"]["version"] = "0.8.2.1"
 default["apache_kafka"]["scala_version"] = "2.11"
 default["apache_kafka"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
 # shasum -a 256 /tmp/kitchen/cache/kafka_2.11-0.8.2.1.tgz
-default["apache_kafka"]["checksum"] = "9fb84546149b477bdbf167da8ca880a2c1199aeb24b2d5cd17aac0973ba4e54b"
+default["apache_kafka"]["checksum"]["0.8.2.1"] = "9fb84546149b477bdbf167da8ca880a2c1199aeb24b2d5cd17aac0973ba4e54b"
 
 default["apache_kafka"]["user"] = "kafka"
 default["apache_kafka"]["setup_user"] = true
