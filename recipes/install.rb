@@ -13,6 +13,7 @@ user node["apache_kafka"]["user"] do
   comment node["apache_kafka"]["user"]
   system true
   shell "/bin/false"
+  only_if { node["apache_kafka"]["setup_user"] }
 end
 
 directory node["apache_kafka"]["install_dir"] do

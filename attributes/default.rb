@@ -10,6 +10,7 @@ default["apache_kafka"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
 default["apache_kafka"]["checksum"] = "9fb84546149b477bdbf167da8ca880a2c1199aeb24b2d5cd17aac0973ba4e54b"
 
 default["apache_kafka"]["user"] = "kafka"
+default["apache_kafka"]["setup_user"] = true
 
 # heap options are set low to allow for local development
 default["apache_kafka"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
