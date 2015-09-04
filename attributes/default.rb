@@ -56,6 +56,7 @@ default["apache_kafka"]["conf"]["server"] = {
 default["apache_kafka"]["conf"]["log4j"] = {
   "file" => "log4j.properties",
   "entries" => {
+    "log4j.additivity.kafka" => "false",
     "log4j.additivity.kafka.controller" => "false",
     "log4j.additivity.kafka.log.LogCleaner" => "false",
     "log4j.additivity.kafka.network.RequestChannel$" => "false",
