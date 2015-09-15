@@ -1,3 +1,15 @@
+AllCops:
+  Exclude:
+    - Rakefile
+    - Berksfile
+    - Vagrantfile
+    - Thorfile
+    - Gemfile
+    - metadata.rb
+    - '.kitchen/*'
+    - 'spec/**/*'
+    - 'vendor/**/*'
+    - 'test/**/*'
 StringLiterals:
   EnforcedStyle: double_quotes
 HashSyntax:
