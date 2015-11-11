@@ -2,9 +2,6 @@
 # Cookbook Name:: apache_kafka
 # Recipe:: configure
 #
-# node["apache_kafka"]["brokers"].each do |broker|
-#   p "Brokers: #{broker.inspect}"
-# end
 
 [
   node["apache_kafka"]["config_dir"],
@@ -17,8 +14,6 @@
     owner node["apache_kafka"]["user"]
   end
 end
-
-
 
 %w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }.each do |bin|
   template ::File.join(node["apache_kafka"]["bin_dir"], bin) do
@@ -54,18 +49,32 @@ def create_broker_configuration(broker_config)
   end
 end
 
-broker_id = node["apache_kafka"]["broker.id"]
-broker_id = 0 if broker_id.nil?
+broker_configs = []
 
-broker_config = {
-  "broker_id" => broker_id,
-  "port" => node["apache_kafka"]["port"],
-  "broker_config_file" => node["apache_kafka"]["conf"]["server"]["file"],
-  "data_dir" => node["apache_kafka"]["data_dir"],
-  "entries" => node["apache_kafka"]["conf"]["server"]["entries"]
-}
+if node["apache_kafka"]["brokers"].nil? || node["apache_kafka"]["brokers"].empty?
+  broker_id = node["apache_kafka"]["broker.id"]
+  broker_id = 0 if broker_id.nil?
+  broker_configs << {
+    "broker_id" => broker_id,
+    "port" => node["apache_kafka"]["port"],
+    "broker_config_file" => node["apache_kafka"]["conf"]["server"]["file"],
+    "data_dir" => node["apache_kafka"]["data_dir"],
+    "entries" => node["apache_kafka"]["conf"]["server"]["entries"]
+  }
+end
 
-create_broker_configuration(broker_config)
+$counter = 0
+def set_defaults(broker_config)
+  broker_config["id"] = broker_config["id"] || $counter
+  broker_config["port"] = broker_config["port"] || 9092 + $counter
+  broker_config["data_dir"] = broker_config["data_dir"] || "/var/log/kafka/broker-#{$counter}"
+  $counter = $counter + 1
+end
+
+broker_configs.each do |broker_config|
+  set_defaults(broker_config)
+  create_broker_configuration(broker_config)
+end
 
 template ::File.join(node["apache_kafka"]["config_dir"],
                      node["apache_kafka"]["conf"]["log4j"]["file"]) do

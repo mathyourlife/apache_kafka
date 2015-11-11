@@ -10,9 +10,9 @@ describe "Kafka" do
       expect(port(9092)).to be_listening
     end
 
-    it "has JMX listening" do
-      expect(port(9192)).to be_listening
-    end
+    # it "has JMX listening" do
+    #   expect(port(9192)).to be_listening
+    # end
 
     it "has a running service of kafka" do
       expect(service("kafka-broker-0")).to be_running
@@ -28,9 +28,9 @@ describe "Kafka" do
       expect(port(9093)).to be_listening
     end
 
-    it "has JMX listening" do
-      expect(port(9193)).to be_listening
-    end
+    # it "has JMX listening" do
+    #   expect(port(9193)).to be_listening
+    # end
 
     it "has a running service of kafka" do
       expect(service("kafka-broker-1")).to be_running
@@ -46,9 +46,9 @@ describe "Kafka" do
       expect(port(9094)).to be_listening
     end
 
-    it "has JMX listening" do
-      expect(port(9194)).to be_listening
-    end
+    # it "has JMX listening" do
+    #   expect(port(9194)).to be_listening
+    # end
 
     it "has a running service of kafka" do
       expect(service("kafka-broker-2")).to be_running
