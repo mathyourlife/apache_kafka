@@ -16,18 +16,18 @@ platforms:
         service_style: "upstart"
       apache_kafka:
         service_style: "upstart"
-  - name: debian-7.8
-    driver_config:
-      box: 'chef/debian-7.8'
-      customize:
-        memory: 2048
-    run_list:
-      - recipe[runit]
-    attributes:
-      zookeeper:
-        service_style: "runit"
-      apache_kafka:
-        service_style: "init.d"
+  # - name: debian-7.8
+  #   driver_config:
+  #     box: 'chef/debian-7.8'
+  #     customize:
+  #       memory: 2048
+  #   run_list:
+  #     - recipe[runit]
+  #   attributes:
+  #     zookeeper:
+  #       service_style: "runit"
+  #     apache_kafka:
+  #       service_style: "init.d"
 
 suites:
   - name: default
@@ -42,21 +42,21 @@ suites:
       apache_kafka:
         jmx:
           port: 9093
-  # - name: multiple-instance
-  #   run_list:
-  #     - recipe[apt]
-  #     - recipe[zookeeper]
-  #     - recipe[zookeeper::service]
-  #     - recipe[apache_kafka]
-  #   attributes:
-  #     apt:
-  #       compile_time_update: true
-  #     apache_kafka:
-  #       brokers:
-  #         - id: 0
-  #         - id: 1
-  #         - id: 2
-  #           port: 9092
-  #           jmx:
-  #             port: 9991
-  #           data_dir: /tmp/kafka-broker-log-overridden
+  - name: multiple-instance
+    run_list:
+      - recipe[apt]
+      - recipe[zookeeper]
+      - recipe[zookeeper::service]
+      - recipe[apache_kafka]
+    attributes:
+      apt:
+        compile_time_update: true
+      apache_kafka:
+        brokers:
+          - id: 0
+          - id: 1
+          - id: 2
+            port: 9092
+            jmx:
+              port: 9991
+            data_dir: /tmp/kafka-broker-log-overridden
