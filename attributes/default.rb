@@ -2,6 +2,7 @@
 # Cookbook Name:: apache_kafka
 # Attribute:: default
 #
+default["apache_kafka"]["brokers"] = []
 
 default["apache_kafka"]["version"] = "0.8.2.1"
 default["apache_kafka"]["scala_version"] = "2.11"
