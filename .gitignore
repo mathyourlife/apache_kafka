@@ -8,3 +8,4 @@ Gemfile.lock
 vendor
 VERSION
 metadata.json
+.ruby-version
