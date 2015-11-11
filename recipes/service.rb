@@ -17,63 +17,92 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-version_tag = "kafka_#{node['apache_kafka']['scala_version']}-#{node['apache_kafka']['version']}"
-
-template "/etc/default/kafka" do
-  source "kafka_env.erb"
-  owner "kafka"
-  action :create
-  mode "0644"
-  variables(
-    :kafka_home => ::File.join(node["apache_kafka"]["install_dir"], version_tag),
-    :kafka_config => node["apache_kafka"]["config_dir"],
-    :kafka_bin => node["apache_kafka"]["bin_dir"],
-    :kafka_user => node["apache_kafka"]["user"],
-    :scala_version => node["apache_kafka"]["scala_version"],
-    :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
-    :jmx_port => node["apache_kafka"]["jmx"]["port"],
-    :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
-  )
-  notifies :restart, "service[kafka]", :delayed
-end
-
-case node["apache_kafka"]["service_style"]
-when "upstart"
-  template "/etc/init/kafka.conf" do
-    source "kafka.init.erb"
-    owner "root"
-    group "root"
+def create_service(kafka_configuration)
+  version_tag = "kafka_#{node['apache_kafka']['scala_version']}-#{node['apache_kafka']['version']}"
+  service_name = kafka_configuration['service_name']
+  p "*** Writing config file for service named #{service_name} *****"
+  p "*** Service style: #{node["apache_kafka"]["service_style"]}"
+  template "/etc/default/#{service_name}" do
+    source "kafka_env.erb"
+    owner "kafka"
     action :create
     mode "0644"
-    notifies :restart, "service[kafka]", :delayed
+    variables(
+      :kafka_home => ::File.join(node["apache_kafka"]["install_dir"], version_tag),
+      :kafka_config => node["apache_kafka"]["config_dir"],
+      :kafka_bin => node["apache_kafka"]["bin_dir"],
+      :kafka_user => node["apache_kafka"]["user"],
+      :scala_version => node["apache_kafka"]["scala_version"],
+      :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
+      :jmx_port => kafka_configuration["jmx_port"],
+      :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
+    )
+    notifies :restart, "service[#{service_name}]", :delayed
   end
-  service "kafka" do
-    provider Chef::Provider::Service::Upstart
-    supports :status => true, :restart => true, :reload => true
-    action [:start, :enable]
-  end
-when "init.d"
-  template "/etc/init.d/kafka" do
-    source "kafka.initd.erb"
-    owner "root"
-    group "root"
-    action :create
-    mode "0744"
-    notifies :restart, "service[kafka]", :delayed
-  end
-  service "kafka" do
-    provider Chef::Provider::Service::Init
-    supports :status => true, :restart => true, :reload => true
-    action [:start]
-  end
-when "runit"
-  include_recipe "runit"
 
-  runit_service "kafka" do
-    default_logger true
-    action [:enable, :start]
+  case node["apache_kafka"]["service_style"]
+  when "upstart"
+    template "/etc/init/#{service_name}.conf" do
+      source "kafka.init.erb"
+      owner "root"
+      group "root"
+      action :create
+      mode "0644"
+      notifies :restart, "service[#{service_name}]", :delayed
+    end
+    service "#{service_name}" do
+      provider Chef::Provider::Service::Upstart
+      supports :status => true, :restart => true, :reload => true
+      action [:start, :enable]
+    end
+  when "init.d"
+    template "/etc/init.d/#{service_name}" do
+      source "kafka.initd.erb"
+      owner "root"
+      group "root"
+      action :create
+      mode "0744"
+      notifies :restart, "service[#{service_name}]", :delayed
+    end
+    service "#{service_name}" do
+      provider Chef::Provider::Service::Init
+      supports :status => true, :restart => true, :reload => true
+      action [:start]
+    end
+  when "runit"
+    include_recipe "runit"
+
+    runit_service "#{service_name}" do
+      default_logger true
+      action [:enable, :start]
+    end
+  else
+    Chef::Log.error("You specified an invalid service style for Kafka, but I am continuing.")
   end
-else
-  Chef::Log.error("You specified an invalid service style for Kafka, but I am continuing.")
 end
+
+$counter = 0
+def set_defaults(broker_config)
+  broker_config["service_name"] = broker_config["service_name"] || "kafka-broker-#{$counter}"
+  $counter = $counter + 1
+end
+
+def run
+  broker_configs = Array.new(node["apache_kafka"]["brokers"])
+  if broker_configs.nil? || broker_configs.empty?
+    broker_id = node["apache_kafka"]["broker.id"]
+    broker_id = 0 if broker_id.nil?
+    broker_configs << {
+        "jmx_port" => node["apache_kafka"]["jmx"]["port"],
+        "service_name" => "kafka"
+    }
+  end
+
+  broker_configs.each do |broker_config|
+    config = Mash.from_hash(broker_config)
+    set_defaults(config)
+    create_service(config)
+  end
+end
+
+run
