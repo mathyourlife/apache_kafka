@@ -42,21 +42,21 @@ suites:
       apache_kafka:
         jmx:
           port: 9093
-  # - name: multiple-instance
-  #   run_list:
-  #     - recipe[apt]
-  #     - recipe[zookeeper]
-  #     - recipe[zookeeper::service]
-  #     - recipe[apache_kafka]
-  #   attributes:
-  #     apt:
-  #       compile_time_update: true
-  #     apache_kafka:
-  #       brokers:
-  #         - id: 0
-  #         - id: 1
-  #         - id: 2
-  #           port: 9092
-  #           jmx:
-  #             port: 9991
-  #           data_dir: /tmp/kafka-broker-log-overridden
+  - name: multiple-instance
+    run_list:
+      - recipe[apt]
+      - recipe[zookeeper]
+      - recipe[zookeeper::service]
+      - recipe[apache_kafka]
+    attributes:
+      apt:
+        compile_time_update: true
+      apache_kafka:
+        brokers:
+          - id: 0
+          - id: 1
+          - id: 2
+            port: 9099
+            jmx:
+              port: 9991
+            data_dir: /tmp/kafka-broker-log-overridden

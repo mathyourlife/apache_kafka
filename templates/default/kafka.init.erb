@@ -14,14 +14,13 @@ umask 007
 kill timeout 300
 
 pre-start script
-    [ -r /etc/default/kafka ]
+    [ -r /etc/default/<%= @service_name %> ]
 end script
 
 limit nofile 32768 32768
 
 script
-  [ -e "/etc/default/kafka" ] && . "/etc/default/kafka"
+  [ -e "/etc/default/<%= @service_name %>" ] && . "/etc/default/<%= @service_name %>"
   exec start-stop-daemon --start --chuid ${KAFKA_USER} --name ${KAFKA_USER} \
-    --exec ${KAFKA_BIN}/kafka-server-start.sh -- ${KAFKA_CONFIG}/server.properties
+    --exec ${KAFKA_BIN}/kafka-server-start.sh -- ${KAFKA_CONFIG}/<%= @broker_config_file %>
 end script
-

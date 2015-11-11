@@ -6,12 +6,12 @@
 
 set -e
 
-[ -e "/etc/default/kafka" ] && . "/etc/default/kafka"
+[ -e "/etc/default/<%= @service_name %>" ] && . "/etc/default/<%= @service_name %>"
 
 DAEMON=$KAFKA_BIN/kafka-server-start.sh
-NAME=kafka
-DAEMONUSER=kafka
-PIDDIR=/var/run/kafka
+NAME=<%= @service_name %>
+DAEMONUSER=<%= @service_name %>
+PIDDIR=/var/run/<%= @service_name %>
 PIDFILE=$PIDDIR/pid
 DESC="Apache Kafka Broker"
 
@@ -34,7 +34,7 @@ case "$1" in
         rm -f $PIDFILE
       fi
     fi
-    start-stop-daemon -Smbp $PIDFILE --chuid $KAFKA_USER -x $DAEMON -- $KAFKA_CONFIG/server.properties
+    start-stop-daemon -Smbp $PIDFILE --chuid $KAFKA_USER -x $DAEMON -- $KAFKA_CONFIG/<%= @broker_config_file %>
     exit 0
   ;;
   stop)
@@ -47,7 +47,7 @@ case "$1" in
       start-stop-daemon -Kp $PIDFILE --oknodo
       rm -f $PIDFILE
     fi
-    start-stop-daemon -Sbmp $PIDFILE -x $DAEMON -- $KAFKA_CONFIG/server.properties
+    start-stop-daemon -Sbmp $PIDFILE -x $DAEMON -- $KAFKA_CONFIG/<%= @broker_config_file %>
   ;;
   status)
     start-stop-daemon --status --pidfile $PIDFILE

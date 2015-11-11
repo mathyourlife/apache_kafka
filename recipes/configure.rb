@@ -11,7 +11,8 @@ def create_broker_configuration(broker_config)
       mode "0755"
       variables(
         :config_dir => node["apache_kafka"]["config_dir"],
-        :bin_dir => node["apache_kafka"]["bin_dir"]
+        :bin_dir => node["apache_kafka"]["bin_dir"],
+        :service_name => "#{broker_config['service_name']}"
       )
       notifies :restart, "service[#{broker_config['service_name']}]", :delayed
     end
@@ -52,7 +53,7 @@ $counter = 0
 def set_defaults(broker_config)
   broker_config["broker_id"] = broker_config["broker_id"] || $counter
   broker_config["service_name"] = broker_config["service_name"] || "kafka-broker-#{$counter}"
-  broker_config["broker_config_file"] = broker_config["broker_config_file"] || "server-#{broker_config['broker_id']}.properties"
+  broker_config["broker_config_file"] = broker_config["broker_config_file"] || "#{broker_config['service_name']}.properties"
   broker_config["port"] = broker_config["port"] || 9092 + $counter
   broker_config["data_dir"] = broker_config["data_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
   broker_config["log_dir"] = broker_config["log_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
@@ -75,23 +76,27 @@ def create_log_configuration(broker_config)
   end
 end
 
-def run
-  broker_configs = Array.new(node["apache_kafka"]["brokers"])
-
+def create_broker_configs
+  broker_configs =  Array.new(node["apache_kafka"]["brokers"])
   if broker_configs.nil? || broker_configs.empty?
     broker_id = node["apache_kafka"]["broker.id"]
     broker_id = 0 if broker_id.nil?
     broker_configs << {
-      "broker_config_file" => "server.properties",
+      "broker_config_file" => node["apache_kafka"]["conf"]["server"]["file"],
       "broker_id" => broker_id,
       "service_name" => "kafka",
+      "broker_config_file" => "server.properties",
       "port" => node["apache_kafka"]["port"],
-      "broker_config_file" => node["apache_kafka"]["conf"]["server"]["file"],
       "log_dir" => node["apache_kafka"]["log_dir"],
       "data_dir" => node["apache_kafka"]["data_dir"],
       "entries" => node["apache_kafka"]["conf"]["server"]["entries"]
     }
   end
+  return broker_configs
+end
+
+def run
+  broker_configs = create_broker_configs
 
   [
     node["apache_kafka"]["config_dir"],

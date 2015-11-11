@@ -48,6 +48,10 @@ def create_service(kafka_configuration)
       group "root"
       action :create
       mode "0644"
+      variables(
+        :service_name => "#{service_name}",
+        :broker_config_file => "#{kafka_configuration['broker_config_file']}"
+      )
       notifies :restart, "service[#{service_name}]", :delayed
     end
     service "#{service_name}" do
@@ -62,6 +66,10 @@ def create_service(kafka_configuration)
       group "root"
       action :create
       mode "0744"
+      variables(
+        :service_name => "#{service_name}",
+        :broker_config_file => "#{kafka_configuration['broker_config_file']}"
+      )
       notifies :restart, "service[#{service_name}]", :delayed
     end
     service "#{service_name}" do
@@ -84,6 +92,7 @@ end
 $counter = 0
 def set_defaults(broker_config)
   broker_config["service_name"] = broker_config["service_name"] || "kafka-broker-#{$counter}"
+  broker_config["broker_config_file"] = broker_config["broker_config_file"] || "#{broker_config["service_name"]}.properties"
   $counter = $counter + 1
 end
 
@@ -94,7 +103,8 @@ def run
     broker_id = 0 if broker_id.nil?
     broker_configs << {
         "jmx_port" => node["apache_kafka"]["jmx"]["port"],
-        "service_name" => "kafka"
+        "service_name" => "kafka",
+        "broker_config_file" => "server.properties"
     }
   end
 
