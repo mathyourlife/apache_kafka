@@ -32,6 +32,8 @@ template "/etc/default/kafka" do
     :kafka_user => node["apache_kafka"]["user"],
     :scala_version => node["apache_kafka"]["scala_version"],
     :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
+    :kafka_jvm_performance_opts => node["apache_kafka"]["kafka_jvm_performance_opts"],
+    :kafka_opts => node["apache_kafka"]["kafka_opts"],
     :jmx_port => node["apache_kafka"]["jmx"]["port"],
     :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
   )

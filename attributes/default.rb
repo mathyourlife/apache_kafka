@@ -14,6 +14,8 @@ default["apache_kafka"]["setup_user"] = true
 
 # heap options are set low to allow for local development
 default["apache_kafka"]["kafka_heap_opts"] = "-Xmx512M -Xms256M"
+default["apache_kafka"]["kafka_jvm_performance_opts"] = "-server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true"
+default["apache_kafka"]["kafka_opts"] = ""
 
 default["apache_kafka"]["jmx"]["port"] = ""
 default["apache_kafka"]["jmx"]["opts"] = "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
