@@ -69,7 +69,7 @@ def create_log_configuration(broker_config)
     action :create
     mode "0644"
     variables(
-      :log_dir => node["apache_kafka"]["log_dir"],
+      :log_dir => broker_config["log_dir"],
       :entries => node["apache_kafka"]["conf"]["log4j"]["entries"]
     )
     notifies :restart, "service[#{broker_config['service_name']}]", :delayed

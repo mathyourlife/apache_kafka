@@ -20,8 +20,7 @@
 def create_service(kafka_configuration)
   version_tag = "kafka_#{node['apache_kafka']['scala_version']}-#{node['apache_kafka']['version']}"
   service_name = kafka_configuration['service_name']
-  p "*** Writing config file for service named #{service_name} *****"
-  p "*** Service style: #{node["apache_kafka"]["service_style"]}"
+
   template "/etc/default/#{service_name}" do
     source "kafka_env.erb"
     owner "kafka"
