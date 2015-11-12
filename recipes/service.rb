@@ -34,7 +34,8 @@ def create_service(kafka_configuration)
       :scala_version => node["apache_kafka"]["scala_version"],
       :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
       :jmx_port => kafka_configuration["jmx_port"],
-      :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
+      :jmx_opts => node["apache_kafka"]["jmx"]["opts"],
+      :log4j_properties_file_path => kafka_configuration["log4j_properties_file_path"]
     )
     notifies :restart, "service[#{service_name}]", :delayed
   end
@@ -92,6 +93,8 @@ $counter = 0
 def set_defaults(broker_config)
   broker_config["service_name"] = broker_config["service_name"] || "kafka-broker-#{$counter}"
   broker_config["broker_config_file"] = broker_config["broker_config_file"] || "#{broker_config["service_name"]}.properties"
+  broker_config["log4j_properties"] = broker_config["log4j_properties"] || "#{broker_config["service_name"]}.properties"
+  broker_config["log4j_properties_file_path"] = broker_config["log4j_properties_file_path"] || "#{node["apache_kafka"]["config_dir"]}/log4j-#{broker_config["service_name"]}.properties"
   $counter = $counter + 1
 end
 
@@ -103,7 +106,8 @@ def run
     broker_configs << {
         "jmx_port" => node["apache_kafka"]["jmx"]["port"],
         "service_name" => "kafka",
-        "broker_config_file" => "server.properties"
+        "broker_config_file" => "server.properties",
+        "log4j_properties_file_path" => "#{node["apache_kafka"]["config_dir"]}/log4j.properties"
     }
   end
 

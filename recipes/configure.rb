@@ -58,12 +58,12 @@ def set_defaults(broker_config)
   broker_config["data_dir"] = broker_config["data_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
   broker_config["log_dir"] = broker_config["log_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
   broker_config["entries"] = []
+  broker_config["log4j_properties_file_path"] = "#{node['apache_kafka']['config_dir']}/log4j-#{broker_config['service_name']}.properties"
   $counter = $counter + 1
 end
 
 def create_log_configuration(broker_config)
-  template ::File.join(node["apache_kafka"]["config_dir"],
-                       node["apache_kafka"]["conf"]["log4j"]["file"]) do
+  template ::File.join(broker_config["log4j_properties_file_path"]) do
     source "properties/log4j.properties.erb"
     owner "kafka"
     action :create
@@ -89,7 +89,8 @@ def create_broker_configs
       "port" => node["apache_kafka"]["port"],
       "log_dir" => node["apache_kafka"]["log_dir"],
       "data_dir" => node["apache_kafka"]["data_dir"],
-      "entries" => node["apache_kafka"]["conf"]["server"]["entries"]
+      "entries" => node["apache_kafka"]["conf"]["server"]["entries"],
+      "log4j_properties_file_path" => node["apache_kafka"]["conf"]["log4j"]["file"]
     }
   end
   return broker_configs

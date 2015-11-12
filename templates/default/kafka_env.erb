@@ -29,7 +29,7 @@ if [ ! -z $JMX_PORT ]; then
 fi
 
 # Log4j settings
-export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties"
+export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:<%= @log4j_properties_file_path %>"
 
 # Generic jvm settings you want to add
 export KAFKA_OPTS=""

@@ -21,6 +21,10 @@ describe "Kafka" do
     it "has a log directory " do
       expect(file("/var/log/kafka/broker-0")).to be_directory
     end
+
+    it "has a log file" do
+      expect(file("/var/log/kafka/broker-0/server.log")).to be_file
+    end
   end
 
   describe "broker 1" do
@@ -39,6 +43,10 @@ describe "Kafka" do
     it "has a log directory " do
       expect(file("/var/log/kafka/broker-1")).to be_directory
     end
+
+    it "has a log file" do
+      expect(file("/var/log/kafka/broker-1/server.log")).to be_file
+    end
   end
 
   describe "broker 2" do
@@ -56,6 +64,10 @@ describe "Kafka" do
 
     it "has a log directory " do
       expect(file("/var/log/kafka/broker-2")).to be_directory
+    end
+
+    it "has a log file" do
+      expect(file("/var/log/kafka/broker-1/server.log")).to be_file
     end
   end
 
