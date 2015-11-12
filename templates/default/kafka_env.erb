@@ -32,13 +32,13 @@ fi
 export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:${KAFKA_CONFIG}/log4j.properties"
 
 # Generic jvm settings you want to add
-export KAFKA_OPTS=""
+export KAFKA_OPTS="<%= @kafka_opts %>"
 
 # Memory options
 export KAFKA_HEAP_OPTS="<%= @kafka_heap_opts %>"
 
 # JVM performance options
-export KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true"
+export KAFKA_JVM_PERFORMANCE_OPTS="<%= @kafka_jvm_performance_opts %>"
 
 ##### CLASSPATH
 
