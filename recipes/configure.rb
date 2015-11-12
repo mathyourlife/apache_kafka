@@ -21,6 +21,10 @@ def create_broker_configuration(broker_config)
   zookeeper_connect = node["apache_kafka"]["zookeeper.connect"]
   zookeeper_connect = "localhost:2181" if zookeeper_connect.nil?
 
+  p "********************************"
+  p broker_config["entries"]
+  p "********************************"
+
   template ::File.join(node["apache_kafka"]["config_dir"], broker_config["broker_config_file"]) do
     source "properties/server.properties.erb"
     owner "kafka"
@@ -57,7 +61,7 @@ def set_defaults(broker_config)
   broker_config["port"] = broker_config["port"] || 9092 + $counter
   broker_config["data_dir"] = broker_config["data_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
   broker_config["log_dir"] = broker_config["log_dir"] || "/var/log/kafka/broker-#{broker_config['broker_id']}"
-  broker_config["entries"] = []
+  broker_config["entries"] = broker_config["entries"] || []
   broker_config["log4j_properties_file_path"] = "#{node['apache_kafka']['config_dir']}/log4j-#{broker_config['service_name']}.properties"
   $counter = $counter + 1
 end
@@ -98,7 +102,6 @@ end
 
 def run
   broker_configs = create_broker_configs
-
   [
     node["apache_kafka"]["config_dir"],
     node["apache_kafka"]["bin_dir"]

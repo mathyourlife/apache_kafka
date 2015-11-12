@@ -69,6 +69,13 @@ describe "Kafka" do
     it "has a log file" do
       expect(file("/var/log/kafka/broker-1/server.log")).to be_file
     end
+
+    it "has an overridden config file" do
+      config_file = file("/usr/local/kafka/config/kafka-broker-2.properties")
+      expect(config_file).to be_file
+      expect(config_file).to contain("broker.id=2")
+      expect(config_file).to contain("host.name=127.0.0.1")
+    end
   end
 
 end

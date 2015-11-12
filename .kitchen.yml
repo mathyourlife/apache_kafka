@@ -60,3 +60,5 @@ suites:
             jmx:
               port: 9991
             data_dir: /tmp/kafka-broker-log-overridden
+            entries:
+              host.name: 127.0.0.1
