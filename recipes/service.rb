@@ -48,6 +48,9 @@ when "upstart"
     group "root"
     action :create
     mode "0644"
+    variables(
+      :kafka_umask => sprintf("%#03o", node["apache_kafka"]["umask"])
+    )
     notifies :restart, "service[kafka]", :delayed
   end
   service "kafka" do
