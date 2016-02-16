@@ -30,6 +30,7 @@ template "/etc/default/kafka" do
     :kafka_config => node["apache_kafka"]["config_dir"],
     :kafka_bin => node["apache_kafka"]["bin_dir"],
     :kafka_user => node["apache_kafka"]["user"],
+    :kafka_log_dir => node["apache_kafka"]["log_dir"],
     :scala_version => node["apache_kafka"]["scala_version"],
     :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
     :kafka_jvm_performance_opts => node["apache_kafka"]["kafka_jvm_performance_opts"],
