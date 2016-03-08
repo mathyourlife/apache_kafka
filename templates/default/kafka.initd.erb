@@ -8,7 +8,7 @@ set -e
 
 [ -e "/etc/default/kafka" ] && . "/etc/default/kafka"
 
-DAEMON=$KAFKA_BIN/kafka-server-start.sh
+DAEMON=$KAFKA_HOME/bin/kafka-server-start.sh
 NAME=kafka
 DAEMONUSER=kafka
 PIDDIR=/var/run/kafka

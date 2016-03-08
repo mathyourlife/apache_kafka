@@ -1,6 +1,6 @@
 # Apache Kafka Cookbook
 
-Install and configure apache kafka 0.8.2.1.
+Install and configure apache kafka >= 0.7.
 
 Default installation assumes a local zookeeper instance (see [SimpleFinance/chef-zookeeper](https://github.com/SimpleFinance/chef-zookeeper)).
 
