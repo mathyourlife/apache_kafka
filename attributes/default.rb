@@ -29,6 +29,9 @@ default["apache_kafka"]["bin_dir"] = "/usr/local/kafka/bin"
 default["apache_kafka"]["config_dir"] = "/usr/local/kafka/config"
 
 default["apache_kafka"]["service_style"] = "upstart"
+# Set this to false if you don't want to automatically restart brokers when
+# the configuration changes.
+default["apache_kafka"]["restart_on_change"] = true
 # Currently only for upstart, the umask for the kafka server process
 default["apache_kafka"]["umask"] = 007
 
