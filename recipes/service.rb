@@ -33,6 +33,7 @@ template "/etc/default/kafka" do
     :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
     :kafka_jvm_performance_opts => node["apache_kafka"]["kafka_jvm_performance_opts"],
     :kafka_opts => node["apache_kafka"]["kafka_opts"],
+    :log_dir => node["apache_kafka"]["log_dir"],
     :jmx_port => node["apache_kafka"]["jmx"]["port"],
     :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
   )
