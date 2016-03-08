@@ -22,6 +22,5 @@ limit nofile 32768 32768
 script
   [ -e "/etc/default/kafka" ] && . "/etc/default/kafka"
   exec start-stop-daemon --start --chuid ${KAFKA_USER} --name ${KAFKA_USER} \
-    --exec ${KAFKA_BIN}/kafka-server-start.sh -- ${KAFKA_CONFIG}/server.properties
+    --exec ${KAFKA_HOME}/bin/kafka-server-start.sh -- ${KAFKA_CONFIG}/server.properties
 end script
-

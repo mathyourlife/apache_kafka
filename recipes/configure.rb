@@ -5,27 +5,12 @@
 
 [
   node["apache_kafka"]["config_dir"],
-  node["apache_kafka"]["bin_dir"],
   node["apache_kafka"]["data_dir"],
   node["apache_kafka"]["log_dir"]
 ].each do |dir|
   directory dir do
     recursive true
     owner node["apache_kafka"]["user"]
-  end
-end
-
-%w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }.each do |bin|
-  template ::File.join(node["apache_kafka"]["bin_dir"], bin) do
-    source "bin/#{bin}.erb"
-    owner "kafka"
-    action :create
-    mode "0755"
-    variables(
-      :config_dir => node["apache_kafka"]["config_dir"],
-      :bin_dir => node["apache_kafka"]["bin_dir"]
-    )
-    notifies :restart, "service[kafka]", :delayed
   end
 end
 

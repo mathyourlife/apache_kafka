@@ -3,11 +3,12 @@
 # Attribute:: default
 #
 
-default["apache_kafka"]["version"] = "0.8.2.1"
+default["apache_kafka"]["version"] = "0.9.0.1"
 default["apache_kafka"]["scala_version"] = "2.11"
 default["apache_kafka"]["mirror"] = "http://apache.mirrors.tds.net/kafka"
 # shasum -a 256 /tmp/kitchen/cache/kafka_2.11-0.8.2.1.tgz
-default["apache_kafka"]["checksum"]["0.8.2.1"] = "9fb84546149b477bdbf167da8ca880a2c1199aeb24b2d5cd17aac0973ba4e54b"
+default["apache_kafka"]["checksum"]["2.11-0.8.2.1"] = "9fb84546149b477bdbf167da8ca880a2c1199aeb24b2d5cd17aac0973ba4e54b"
+default["apache_kafka"]["checksum"]["2.11-0.9.0.1"] = "db28f4d5a9327711013c26632baed8e905ce2f304df89a345f25a6dfca966c7a"
 
 default["apache_kafka"]["user"] = "kafka"
 default["apache_kafka"]["setup_user"] = true
@@ -25,7 +26,6 @@ default["apache_kafka"]["install_java"] = true
 default["apache_kafka"]["install_dir"] = "/usr/local/kafka"
 default["apache_kafka"]["data_dir"] = "/var/log/kafka"
 default["apache_kafka"]["log_dir"] = "/var/log/kafka"
-default["apache_kafka"]["bin_dir"] = "/usr/local/kafka/bin"
 default["apache_kafka"]["config_dir"] = "/usr/local/kafka/config"
 
 default["apache_kafka"]["service_style"] = "upstart"
@@ -33,7 +33,7 @@ default["apache_kafka"]["service_style"] = "upstart"
 default["apache_kafka"]["umask"] = 007
 
 # Kafka configuration settings are detailed here.
-# https://kafka.apache.org/08/configuration.html
+# https://kafka.apache.org/documentation.html
 # Required settings are specified below as they may need special handling
 # by wrapper cookbooks.  All others are fixed at default levels.  This
 # allows wrapper cookbooks to override a value then subsequently remove

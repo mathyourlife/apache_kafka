@@ -28,12 +28,12 @@ template "/etc/default/kafka" do
   variables(
     :kafka_home => ::File.join(node["apache_kafka"]["install_dir"], version_tag),
     :kafka_config => node["apache_kafka"]["config_dir"],
-    :kafka_bin => node["apache_kafka"]["bin_dir"],
     :kafka_user => node["apache_kafka"]["user"],
     :scala_version => node["apache_kafka"]["scala_version"],
     :kafka_heap_opts => node["apache_kafka"]["kafka_heap_opts"],
     :kafka_jvm_performance_opts => node["apache_kafka"]["kafka_jvm_performance_opts"],
     :kafka_opts => node["apache_kafka"]["kafka_opts"],
+    :log_dir => node["apache_kafka"]["log_dir"],
     :jmx_port => node["apache_kafka"]["jmx"]["port"],
     :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
   )
