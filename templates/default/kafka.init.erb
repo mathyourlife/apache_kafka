@@ -14,7 +14,11 @@ umask <%= @kafka_umask %>
 kill timeout 300
 
 pre-start script
+<% if @pd_generate_certs -%>
+    [ -r /etc/default/kafka ] && <%= @kafka_bin_dir %>/pd-generate-certs.sh
+<% else -%>
     [ -r /etc/default/kafka ]
+<% end -%>
 end script
 
 limit nofile 32768 32768
@@ -24,4 +28,3 @@ script
   exec start-stop-daemon --start --chuid ${KAFKA_USER} --name ${KAFKA_USER} \
     --exec ${KAFKA_BIN}/kafka-server-start.sh -- ${KAFKA_CONFIG}/server.properties
 end script
-

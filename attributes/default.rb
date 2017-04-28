@@ -45,6 +45,10 @@ default["apache_kafka"]["broker.id"] = nil
 default["apache_kafka"]["port"] = 9092
 default["apache_kafka"]["zookeeper.connect"] = nil
 
+# execute kafka bin dir pd-generate-certs script on upstart pre-start if true
+# see pd-kafka ssl recipe for deets
+default["apache_kafka"]["pd_generate_certs"] = false
+
 # Check in /var/log/kafka/server.log for invalid entries
 #
 default["apache_kafka"]["conf"]["server"] = {
