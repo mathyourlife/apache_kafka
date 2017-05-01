@@ -15,6 +15,8 @@
   end
 end
 
+do_restart = node['apache_kafka']['restart_on_change']
+
 %w{ kafka-server-start.sh kafka-run-class.sh kafka-topics.sh }.each do |bin|
   template ::File.join(node["apache_kafka"]["bin_dir"], bin) do
     source "bin/#{bin}.erb"
@@ -25,7 +27,7 @@ end
       :config_dir => node["apache_kafka"]["config_dir"],
       :bin_dir => node["apache_kafka"]["bin_dir"]
     )
-    notifies :restart, "service[kafka]", :delayed
+    notifies :restart, "service[kafka]", :delayed if do_restart
   end
 end
 
@@ -48,7 +50,7 @@ template ::File.join(node["apache_kafka"]["config_dir"],
     :log_dirs => node["apache_kafka"]["data_dir"],
     :entries => node["apache_kafka"]["conf"]["server"]["entries"]
   )
-  notifies :restart, "service[kafka]", :delayed
+  notifies :restart, "service[kafka]", :delayed if do_restart
 end
 
 template ::File.join(node["apache_kafka"]["config_dir"],
@@ -61,5 +63,5 @@ template ::File.join(node["apache_kafka"]["config_dir"],
     :log_dir => node["apache_kafka"]["log_dir"],
     :entries => node["apache_kafka"]["conf"]["log4j"]["entries"]
   )
-  notifies :restart, "service[kafka]", :delayed
+  notifies :restart, "service[kafka]", :delayed if do_restart
 end

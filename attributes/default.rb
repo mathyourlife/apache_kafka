@@ -29,6 +29,9 @@ default["apache_kafka"]["bin_dir"] = "/usr/local/kafka/bin"
 default["apache_kafka"]["config_dir"] = "/usr/local/kafka/config"
 
 default["apache_kafka"]["service_style"] = "upstart"
+# Set this to false if you don't want to automatically restart brokers when
+# the configuration changes.
+default["apache_kafka"]["restart_on_change"] = true
 # Currently only for upstart, the umask for the kafka server process
 default["apache_kafka"]["umask"] = 007
 
@@ -41,6 +44,10 @@ default["apache_kafka"]["umask"] = 007
 default["apache_kafka"]["broker.id"] = nil
 default["apache_kafka"]["port"] = 9092
 default["apache_kafka"]["zookeeper.connect"] = nil
+
+# execute kafka bin dir pd-generate-certs script on upstart pre-start if true
+# see pd-kafka ssl recipe for deets
+default["apache_kafka"]["pd_generate_certs"] = false
 
 # Check in /var/log/kafka/server.log for invalid entries
 #

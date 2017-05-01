@@ -19,6 +19,7 @@
 # limitations under the License.
 
 version_tag = "kafka_#{node['apache_kafka']['scala_version']}-#{node['apache_kafka']['version']}"
+do_restart = node['apache_kafka']['restart_on_change']
 
 template "/etc/default/kafka" do
   source "kafka_env.erb"
@@ -37,7 +38,7 @@ template "/etc/default/kafka" do
     :jmx_port => node["apache_kafka"]["jmx"]["port"],
     :jmx_opts => node["apache_kafka"]["jmx"]["opts"]
   )
-  notifies :restart, "service[kafka]", :delayed
+  notifies :restart, "service[kafka]", :delayed if do_restart
 end
 
 case node["apache_kafka"]["service_style"]
@@ -49,9 +50,11 @@ when "upstart"
     action :create
     mode "0644"
     variables(
-      :kafka_umask => sprintf("%#03o", node["apache_kafka"]["umask"])
+      :kafka_umask => sprintf("%#03o", node["apache_kafka"]["umask"]),
+      :pd_generate_certs => node["apache_kafka"]["pd_generate_certs"],
+      :kafka_bin_dir => node['apache_kafka']['bin_dir']
     )
-    notifies :restart, "service[kafka]", :delayed
+    notifies :restart, "service[kafka]", :delayed if do_restart
   end
   service "kafka" do
     provider Chef::Provider::Service::Upstart
@@ -65,7 +68,7 @@ when "init.d"
     group "root"
     action :create
     mode "0744"
-    notifies :restart, "service[kafka]", :delayed
+    notifies :restart, "service[kafka]", :delayed if do_restart
   end
   service "kafka" do
     provider Chef::Provider::Service::Init
